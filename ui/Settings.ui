@@ -32,36 +32,23 @@
     <attribute name="title">
      <string>General</string>
     </attribute>
-    <widget class="Line" name="line">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>100</y>
-       <width>651</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="lineEdit">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>10</y>
-       <width>451</width>
-       <height>29</height>
+       <x>100</x>
+       <y>40</y>
+       <width>461</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_2">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>40</y>
-       <width>451</width>
-       <height>29</height>
+       <x>100</x>
+       <y>70</y>
+       <width>461</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
@@ -69,7 +56,7 @@
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>10</y>
+       <y>40</y>
        <width>86</width>
        <height>31</height>
       </rect>
@@ -82,7 +69,7 @@
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>40</y>
+       <y>70</y>
        <width>86</width>
        <height>31</height>
       </rect>
@@ -92,10 +79,13 @@
      </property>
     </widget>
     <widget class="QPushButton" name="browseRoms">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>70</y>
+       <y>130</y>
        <width>86</width>
        <height>31</height>
       </rect>
@@ -105,12 +95,15 @@
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_3">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>70</y>
-       <width>451</width>
-       <height>29</height>
+       <x>100</x>
+       <y>130</y>
+       <width>461</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
@@ -118,7 +111,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>40</y>
        <width>101</width>
        <height>31</height>
       </rect>
@@ -130,10 +123,10 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>12</x>
-       <y>44</y>
+       <x>10</x>
+       <y>70</y>
        <width>91</width>
-       <height>21</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -144,13 +137,26 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>70</y>
+       <y>130</y>
        <width>101</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Path to Roms:</string>
+      <string>Rom Path:</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="romCheck">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>110</y>
+       <width>211</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Override default rom path</string>
      </property>
     </widget>
    </widget>
