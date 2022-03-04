@@ -2,7 +2,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from addvm import Ui_addVM
-from settings import Ui_settingsWindow
+from settings import settingsWindow
 import subprocess
 
 class Ui_MainWindow(object):
@@ -131,8 +131,8 @@ class Ui_MainWindow(object):
 
     def settingsButtonClicked(self, datadict):
         SettingsDialog = QtWidgets.QDialog()
-        ui = Ui_settingsWindow()
-        ui.setupUi(SettingsDialog, datadict)
+        ui = settingsWindow()
+        ui.setupWin(SettingsDialog, datadict)
         SettingsDialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         SettingsDialog.exec_()
 
