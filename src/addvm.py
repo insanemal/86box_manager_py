@@ -132,13 +132,11 @@ class Ui_addVM(object):
                     ops.append('-S')
                     p = subprocess.Popen(ops)
                     p.wait()
-            import pickle
-            config_file = self.datadict["ConfigPath"]
-            with open(config_file, 'wb') as handle:
-                pickle.dump(self.datadict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            from util import saveConfig
+            saveConfig(self.datadict)
             if self.startVMcheck.checkState():
                 self.datadict['RunVM'] = name
-        window.close()
+            window.close()
 
 
 

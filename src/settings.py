@@ -2,6 +2,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
+from util import saveConfig
 
 class Ui_settingsWindow(object):
     def setupUi(self, settingsWindow,datadict):
@@ -143,7 +144,8 @@ class Ui_settingsWindow(object):
         browse = QtWidgets.QFileDialog()
         browse.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         if platform.system() == "Windows":
-            browse.setFilter("EXE files (*.exe)")
+            browse.setNameFilters(["EXE files (*.exe)"])
+            browse.selectNameFilter("EXE files (*.exe)")
         if browse.exec_() == QtWidgets.QDialog.Accepted:
             filename = browse.selectedFiles()
             if filename:
@@ -187,9 +189,7 @@ class Ui_settingsWindow(object):
             self.datadict['LogEnable'] = self.checkBox.isChecked()
             if self.checkBox.isChecked():
                 self.datadict["LogPath"] = self.lineEdit_4.text()
-            config_file = self.datadict["ConfigPath"]
-            with open(config_file, 'wb') as handle:
-                pickle.dump(self.datadict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            saveConfig(self.datadict)
             window.close()
         else:
             dlg = QtWidgets.QMessageBox(window)

@@ -57,9 +57,10 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.timer.start()
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        self.timer.start()
         self.addButton.clicked.connect(lambda: self.addButtonfunc(self.datadict))
         self.settingsButton.clicked.connect(lambda: self.settingsButtonClicked(self.datadict))
         self.configButton.clicked.connect(self.configButtonClicked)
