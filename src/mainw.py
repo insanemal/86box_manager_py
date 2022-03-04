@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from addvm import Ui_addVM
+from addvm import addVMC
 from settings import settingsWindow
 import subprocess
 from main_ui import Ui_MainWindow
@@ -24,8 +24,8 @@ class MainWin(Ui_MainWindow):
 
     def addButtonfunc(self, datadict):
         AddDialog = QtWidgets.QDialog()
-        ui = Ui_addVM()
-        ui.setupUi(AddDialog, datadict)
+        ui = addVMC()
+        ui.setupWin(AddDialog, datadict)
         AddDialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         AddDialog.exec_()
         if 'RunVM' in self.datadict.keys():
