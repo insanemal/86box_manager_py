@@ -3,7 +3,7 @@ import json
 
 def createV1Config():
     v1 = {}
-    v1["Version"] = 1
+    v1["ConfigVersion"] = 1
     v1["ConfigPath"] = ""
     v1["VMList"] = {}
     v1["86BoxPath"] = ""
