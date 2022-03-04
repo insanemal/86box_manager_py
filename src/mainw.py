@@ -126,6 +126,7 @@ class MainWin(Ui_MainWindow):
                     p.wait()
 
     def startButtonClicked(self):
+        import os
         items = self.vmTable.selectedItems()
         if len(items) > 0:
             name = items[0].text()
@@ -141,7 +142,6 @@ class MainWin(Ui_MainWindow):
                             ops.append(self.datadict['RomPath'])
                     if 'LogEnable' in self.datadict.keys():
                         if self.datadict['LogEnable']:
-                            import os
                             ops.append('-L')
                             log_path = os.path.join(self.datadict['LogPath'],name+'.log')
                             ops.append(log_path)
