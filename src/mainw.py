@@ -9,6 +9,7 @@ from main_ui import Ui_MainWindow
 class MainWin(Ui_MainWindow):
     def setupWin(self, MainWindow,datadict):
         self.setupUi(MainWindow)
+        self.window = MainWindow
         self.datadict = datadict
         self.runningVM = {}
         self.timer = QtCore.QTimer()
@@ -22,7 +23,25 @@ class MainWin(Ui_MainWindow):
         self.startButton.clicked.connect(self.startButtonClicked)
         self.removeButton.clicked.connect(self.removeButtonClicked)
 
+    def errorBox(self,window,title,message):
+        dlg = QtWidgets.QMessageBox(window)
+        dlg.setWindowTitle(title)
+        dlg.setText(message)
+        results = dlg.exec()
+
+
     def addButtonfunc(self, datadict):
+        import os
+        if not(os.path.exists(datadict['86BoxPath'])):
+            self.errorBox(self.window,'Invalid 86Box path','Please review the settings and define a 86Box path')
+            return
+        elif not(os.path.exists(datadict['VMPath'])):
+            self.errorBox(self.window,'Invalid VM storage path','Please review the settings and define a path to VM storage')
+            return
+        elif datadict['RomOverride']:
+            if not(os.path.exists(datadict['RomPath'])):
+                self.errorBox(self.window,'Invalid Rom storage path','Please review the settings and define a path to Rom Storage')
+                return
         AddDialog = QtWidgets.QDialog()
         ui = addVMC()
         ui.setupWin(AddDialog, datadict)
@@ -40,7 +59,6 @@ class MainWin(Ui_MainWindow):
                         ops.append(self.datadict['RomPath'])
                 if 'LogEnable' in self.datadict.keys():
                     if self.datadict['LogEnable']:
-                        import os
                         ops.append('-L')
                         log_path = os.path.join(self.datadict['LogPath'],name+'.log')
                         ops.append(log_path)
