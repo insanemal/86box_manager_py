@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, QtNetwork
 from addvm import addVMC
 from settings import settingsWindow
 import subprocess
@@ -29,6 +29,15 @@ class MainWin(Ui_MainWindow):
         dlg.setText(message)
         results = dlg.exec()
 
+    def editButtonClicked(self):
+        items = self.vmTable.selectedItems()
+        if len(items) >0:
+            name = items[0].text()
+            if name in self.runningVM.keys():
+                process,server =self.runningVM[name]
+
+    def socketConnect(self):
+        print("Socket connected")
 
     def addButtonfunc(self, datadict):
         import os
@@ -66,7 +75,12 @@ class MainWin(Ui_MainWindow):
                 ops.append(path)
                 ops.append('-V')
                 ops.append(name)
-                self.runningVM[name] = subprocess.Popen(ops)
+                server = QtNetwork.QLocalServer()
+                server.listen(name)
+                server.newConnection.connect(self.socketConnect)
+                new_env = os.environ
+                new_env["86BOX_MANAGER_SOCKET"] = name
+                self.runningVM[name] = (subprocess.Popen(ops, env=new_env), server)
 
     def removeButtonClicked(self):
         items = self.vmTable.selectedItems()
@@ -79,10 +93,8 @@ class MainWin(Ui_MainWindow):
                 ignore = self.datadict['VMList'].pop(name)
                 if os.path.exists(path):
                     shutil.rmtree(path)
-                import pickle
-                config_file = self.datadict["ConfigPath"]
-                with open(config_file, 'wb') as handle:
-                    pickle.dump(self.datadict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+                from util import saveConfig
+                saveConfig(self.datadict)
 
     def settingsButtonClicked(self, datadict):
         SettingsDialog = QtWidgets.QDialog()
@@ -137,14 +149,20 @@ class MainWin(Ui_MainWindow):
                     ops.append(path)
                     ops.append('-V')
                     ops.append(name)
-                    self.runningVM[name] = subprocess.Popen(ops)
+                    server = QtNetwork.QLocalServer()
+                    server.listen(name)
+                    server.newConnection.connect(self.socketConnect)
+                    new_env = os.environ
+                    new_env["86BOX_MANAGER_SOCKET"] = name
+                    self.runningVM[name] = (subprocess.Popen(ops, env=new_env), server)
 
 
     def timerFire(self):
         stopped = []
         if len(self.runningVM) > 0 :
             for name in self.runningVM:
-                if not(self.runningVM[name].poll() == None):
+                process, server = self.runningVM[name]
+                if not(process.poll() == None):
                     stopped.append(name)
         if len(stopped)  > 0:
             for vm in stopped:
