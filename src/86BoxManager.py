@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from mainw import Ui_MainWindow
+from mainw import MainWin
 from PyQt5 import QtCore, QtGui, QtWidgets
 from util import loadOrNew
 import sys
@@ -12,7 +12,7 @@ if __name__ == "__main__":
     datadict = loadOrNew()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    MainWindow.ui = Ui_MainWindow()
-    MainWindow.ui.setupUi(MainWindow,datadict)
+    MainWindow.ui = MainWin()
+    MainWindow.ui.setupWin(MainWindow,datadict)
     MainWindow.show()
     sys.exit(app.exec_())
