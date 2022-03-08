@@ -27,8 +27,8 @@ def genConfPath():
         return path.join(home,'.config/86BoxManPy/')
     elif platform.system() == "Windows":
         return path.join(home, 'AppData\\Local\\86BoxManPy\\')
-    elif platform.system == "Darwin":
-        return path.join(home, 'Library/Application Support/86BoxManPy/86BoxManPy/')
+    elif platform.system() == "Darwin":
+        return path.join(home, 'Library/Application Support/86BoxManPy/')
 
 def saveConfig(config):
     with open(config['ConfigPath'], 'w') as handle:
@@ -59,3 +59,9 @@ def loadOrNew():
         saveConfig(datadict)
     return datadict
 
+
+def errorBox(self,window,title,message):
+    dlg = QtWidgets.QMessageBox(window)
+    dlg.setWindowTitle(title)
+    dlg.setText(message)
+    results = dlg.exec()

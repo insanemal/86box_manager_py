@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5 import QtCore, QtGui, QtWidgets, QtNetwork
+from PyQt5 import QtCore, QtGui, QtWidgets, QtNetwork, Qt
 from addvm import addVMC
 from settings import settingsWindow
 import subprocess
 from main_ui import Ui_MainWindow
+from edit import editVMiW
 
 class MainWin(Ui_MainWindow):
     def setupWin(self, MainWindow,datadict):
@@ -12,6 +13,7 @@ class MainWin(Ui_MainWindow):
         self.window = MainWindow
         self.datadict = datadict
         self.runningVM = {}
+        self.window = MainWindow
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.timerFire)
         self.timer.setSingleShot(False)
@@ -22,6 +24,18 @@ class MainWin(Ui_MainWindow):
         self.configButton.clicked.connect(self.configButtonClicked)
         self.startButton.clicked.connect(self.startButtonClicked)
         self.removeButton.clicked.connect(self.removeButtonClicked)
+        self.editButton.clicked.connect(self.editButtonClicked)
+
+    def sendMessage(self,name,message):
+        if name in self.runningVM.keys():
+            block = QtCore.QByteArray()
+            out = QtCore.QTextStream(block, QtCore.QIODevice.WriteOnly)
+            out << message + "\n"
+            out.flush()
+            print(block)
+            if 'client' in self.runningVM[name].keys():
+                self.runningVM[name]['client'].write(block)
+                self.runningVM[name]['client'].flush()
 
     def errorBox(self,window,title,message):
         dlg = QtWidgets.QMessageBox(window)
@@ -33,11 +47,46 @@ class MainWin(Ui_MainWindow):
         items = self.vmTable.selectedItems()
         if len(items) >0:
             name = items[0].text()
-            if name in self.runningVM.keys():
-                process,server =self.runningVM[name]
+            if not(name in self.runningVM.keys()):
+                editDialog = QtWidgets.QDialog()
+                edit = editVMiW()
+                edit.setupWin(editDialog, self.datadict, name)
+                editDialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+                editDialog.exec_()
+                if 'RunVM' in self.datadict.keys():
+                    name = self.datadict.pop('RunVM')
+                    desc,path = self.datadict['VMList'][name]
+                    if '86BoxPath' in self.datadict.keys():
+                        ops=[]
+                        ops.append(self.datadict['86BoxPath'])
+                        if 'RomOverride' in self.datadict.keys():
+                            if self.datadict['RomOverride']:
+                                ops.append('-R')
+                                ops.append(self.datadict['RomPath'])
+                        if 'LogEnable' in self.datadict.keys():
+                            if self.datadict['LogEnable']:
+                                ops.append('-L')
+                                log_path = os.path.join(self.datadict['LogPath'],name+'.log')
+                                ops.append(log_path)
+                        ops.append('-P')
+                        ops.append(path)
+                        ops.append('-V')
+                        ops.append(name)
+                        server = QtNetwork.QLocalServer()
+                        socketName = name+str(os.getpid())
+                        server.listen(socketName)
+                        server.newConnection.connect(lambda: self.socketConnect(name))
+                        new_env = os.environ
+                        new_env["86BOX_MANAGER_SOCKET"] = socketName
+                        self.runningVM[name] = {'process':subprocess.Popen(ops, env=new_env),'server': server}
 
-    def socketConnect(self):
-        print("Socket connected")
+
+    def socketConnect(self,name):
+        import time
+        print("Socket connected:"+name)
+        self.runningVM[name]['client'] = self.runningVM[name]['server'].nextPendingConnection()
+        print(self.runningVM[name]['client'])
+        self.runningVM[name]['client'].disconnected.connect(self.runningVM[name]['client'].deleteLater)
 
     def addButtonfunc(self, datadict):
         import os
@@ -76,11 +125,12 @@ class MainWin(Ui_MainWindow):
                 ops.append('-V')
                 ops.append(name)
                 server = QtNetwork.QLocalServer()
-                server.listen(name)
-                server.newConnection.connect(self.socketConnect)
+                socketName = name+str(os.getpid())
+                server.listen(socketName)
+                server.newConnection.connect(lambda: self.socketConnect(name))
                 new_env = os.environ
-                new_env["86BOX_MANAGER_SOCKET"] = name
-                self.runningVM[name] = (subprocess.Popen(ops, env=new_env), server)
+                new_env["86BOX_MANAGER_SOCKET"] = socketName
+                self.runningVM[name] = {'process':subprocess.Popen(ops, env=new_env),'server': server}
 
     def removeButtonClicked(self):
         items = self.vmTable.selectedItems()
@@ -150,18 +200,19 @@ class MainWin(Ui_MainWindow):
                     ops.append('-V')
                     ops.append(name)
                     server = QtNetwork.QLocalServer()
-                    server.listen(name)
-                    server.newConnection.connect(self.socketConnect)
+                    socketName = name+str(os.getpid())
+                    if server.listen(socketName):
+                        server.newConnection.connect(lambda: self.socketConnect(name))
                     new_env = os.environ
-                    new_env["86BOX_MANAGER_SOCKET"] = name
-                    self.runningVM[name] = (subprocess.Popen(ops, env=new_env), server)
+                    new_env["86BOX_MANAGER_SOCKET"] = socketName
+                    self.runningVM[name] = {'process':subprocess.Popen(ops, env=new_env),'server': server}
 
 
     def timerFire(self):
         stopped = []
         if len(self.runningVM) > 0 :
             for name in self.runningVM:
-                process, server = self.runningVM[name]
+                process = self.runningVM[name]['process']
                 if not(process.poll() == None):
                     stopped.append(name)
         if len(stopped)  > 0:
