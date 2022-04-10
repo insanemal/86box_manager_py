@@ -7,8 +7,9 @@ from util import errorBox, saveConfig
 
 
 class editVMiW(Ui_editVM):
-    def setupWin(self, editVM, datadict, name):
+    def setupWin(self, editVM, datadict, name, runningVM):
         self.setupUi(editVM)
+        self.runningVM = runningVM
         self.datadict = datadict
         self.changed = False
         self.window = editVM

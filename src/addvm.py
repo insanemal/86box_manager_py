@@ -55,6 +55,7 @@ class addVMC(Ui_addVM):
             if not('VMList' in self.datadict.keys()):
                 self.datadict['VMList'] = {}
             self.datadict['VMList'][name] = (description,path)
+            from util import saveConfig
             saveConfig(self.datadict)
             if self.configureCheck.isChecked():
                 if '86BoxPath' in self.datadict.keys():
@@ -72,7 +73,6 @@ class addVMC(Ui_addVM):
                     ops.append('-S')
                     p = subprocess.Popen(ops)
                     p.wait()
-            from util import saveConfig
             if self.startVMcheck.checkState():
                 self.datadict['RunVM'] = name
             window.close()
