@@ -50,7 +50,7 @@ class MainWin(Ui_MainWindow):
             if not(name in self.runningVM.keys()):
                 editDialog = QtWidgets.QDialog()
                 edit = editVMiW()
-                edit.setupWin(editDialog, self.datadict, name)
+                edit.setupWin(editDialog, self.datadict, name, self.runningVM)
                 editDialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
                 editDialog.exec_()
                 if 'RunVM' in self.datadict.keys():
