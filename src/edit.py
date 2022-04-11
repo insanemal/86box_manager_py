@@ -34,10 +34,10 @@ class editVMiW(Ui_editVM):
             newDesc = self.vmDescription.text()
             newPath = self.vmPath.text()
             if not(self.vmname in self.runningVM.keys()):
-                if not(self.vmname in self.datadict['VMList'].keys()):
-                    nope,nope1 = self.datadict.pop(self.vmname)
+                if self.vmname in self.datadict['VMList'].keys():
+                    nope,nope1 = self.datadict['VMList'].pop(self.vmname)
                 if os.path.exists(newPath):
-                    self.datadict['VMList'] = (newDesc, newPath)
+                    self.datadict['VMList'][newName] = (newDesc, newPath)
                     saveConfig(self.datadict)
                     if self.configureCheck.isChecked():
                         if '86BoxPath' in self.datadict.keys():
@@ -51,12 +51,12 @@ class editVMiW(Ui_editVM):
                             ops.append('-P')
                             ops.append(path)
                             ops.append('-V')
-                            ops.append(name)
+                            ops.append(newName)
                             ops.append('-S')
                             p = subprocess.Popen(ops)
                             p.wait()
                     if self.startVMcheck.checkState():
-                        self.datadict['RunVM'] = name
+                        self.datadict['RunVM'] = newName
                 else:
                     errorBox(self, self.window, "Error", "Path doesn't exist.")
             else:
