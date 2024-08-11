@@ -7,6 +7,18 @@ import subprocess
 from main_ui import Ui_MainWindow
 from edit import editVMiW
 
+def really_delete_vm():
+    msg = QtWidgets.QMessageBox() 
+    msg.setIcon(QtWidgets.QMessageBox.Warning) 
+    msg.setText("Warning: You are about to delete a VM. Are you sure you want to continue?")
+    msg.setWindowTitle("Delete VM?")
+    msg.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel) 
+      
+    # start the app 
+    retval = msg.exec_()
+
+    return QtWidgets.QMessageBox.Yes == retval
+
 class MainWin(Ui_MainWindow):
     def setupWin(self, MainWindow,datadict):
         self.setupUi(MainWindow)
@@ -133,6 +145,11 @@ class MainWin(Ui_MainWindow):
                 self.runningVM[name] = {'process':subprocess.Popen(ops, env=new_env),'server': server}
 
     def removeButtonClicked(self):
+        # show message box asking if VM should be removed
+        # if yes, remove VM from VMList and delete VM directory
+        if not really_delete_vm():
+                return # abort deletion
+        
         items = self.vmTable.selectedItems()
         if len(items) > 0:
             name = items[0].text()

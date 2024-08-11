@@ -16,263 +16,233 @@
   <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>661</width>
-     <height>241</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <widget class="QWidget" name="generalTab">
-    <attribute name="title">
-     <string>General</string>
-    </attribute>
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>40</y>
-       <width>461</width>
-       <height>31</height>
-      </rect>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
+     <widget class="QWidget" name="generalTab">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>86Box Path:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="browse86box">
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Path to VMs:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_2"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="browseVMstorage">
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="romCheck">
+         <property name="text">
+          <string>Override default rom path</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Rom Path:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="browseRoms">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="4" column="1">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="advancedTab">
+      <attribute name="title">
+       <string>Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Enable Logging to file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_4">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="logBrowse">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>86</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="aboutTab">
+      <attribute name="title">
+       <string>About</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>19</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>86Box Manager Lite</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A config manager for 86Box&lt;br/&gt;&lt;br/&gt;Version 0.0.1&lt;br/&gt;&lt;br/&gt;Copyright 2022 Malcolm Haak&lt;/p&gt;&lt;p&gt;Licenced under the &amp;lt;insert licence here&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>70</y>
-       <width>461</width>
-       <height>31</height>
-      </rect>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-    </widget>
-    <widget class="QPushButton" name="browse86box">
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>40</y>
-       <width>86</width>
-       <height>31</height>
-      </rect>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>4</height>
+      </size>
      </property>
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="browseVMstorage">
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>70</y>
-       <width>86</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="browseRoms">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>130</y>
-       <width>86</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>130</y>
-       <width>461</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>101</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>86Box Path:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>91</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Path to VMs:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>101</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Rom Path:</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="romCheck">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>110</y>
-       <width>211</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Override default rom path</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="advancedTab">
-    <attribute name="title">
-     <string>Advanced</string>
-    </attribute>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>181</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Enable Logging to file</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_4">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>551</width>
-       <height>29</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="logBrowse">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>40</y>
-       <width>86</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="aboutTab">
-    <attribute name="title">
-     <string>About</string>
-    </attribute>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>0</y>
-       <width>311</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>19</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>86Box Manager Lite</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>631</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A config manager for 86Box&lt;br/&gt;&lt;br/&gt;Version 0.0.1&lt;br/&gt;&lt;br/&gt;Copyright 2022 Malcolm Haak&lt;/p&gt;&lt;p&gt;Licenced under the &amp;lt;insert licence here&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="settingsOK">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>260</y>
-     <width>86</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ok</string>
-   </property>
-   <property name="default">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="settingsCancel">
-   <property name="geometry">
-    <rect>
-     <x>580</x>
-     <y>260</y>
-     <width>86</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cancel</string>
-   </property>
-  </widget>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="settingsOK">
+       <property name="text">
+        <string>Ok</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="settingsCancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
